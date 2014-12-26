@@ -1,0 +1,24 @@
+#BlueJ class context
+comment0.params=game
+comment0.target=PaKActor(PaKman)
+comment1.params=
+comment1.target=void\ reset()
+comment2.params=
+comment2.target=void\ act()
+comment2.text=\n\ Called\ in\ the\ game\ loop.\ Updates\ pakman's\ location\ and\ cycles\ the\ sprite.\n
+comment3.params=loc
+comment3.target=void\ doMove(ch.aplu.jgamegrid.Location)
+comment3.text=\n\ Move\ pakman\ to\ the\ given\ location.\n
+comment4.params=dir
+comment4.target=void\ tryMove(ch.aplu.jgamegrid.Location.CompassDirection)
+comment4.text=\n\ Try\ to\ move\ one\ step\ in\ the\ given\ direction.\n\ Pakman\ is\ always\ turned\ in\ the\ given\ direction.\ If\ possible,\ it's\n\ next\ position\ is\ set.\n
+comment5.params=location
+comment5.target=boolean\ canMove(ch.aplu.jgamegrid.Location)
+comment5.text=\n\ Return\ true\ iff\ the\ given\ location\ is\ a\ valid\ location\ for\ this\ actor\n
+comment6.params=keyCode
+comment6.target=void\ keyRepeated(int)
+comment6.text=\n\ Called\ when\ a\ key\ is\ pressed.\ This\ event\ handler\ consumes\ arrow\n\ keys\ and\ sets\ the\ direction\ of\ this\ PaKman\ according\ to\ the\ key\n\ pressed.\n\ @param\ keyCode\ code\ of\ the\ pressed\ key\ (java.awt.event.KeyEvent)\n
+comment7.params=keyCode
+comment7.target=boolean\ handleKey(int)
+comment7.text=\n\ If\ the\ given\ key\ controls\ pakman,\ handle\ it.\n\ Currently,\ the\ arrow\ keys\ are\ pakman\ controls.\n\ @returns\ true\ iff\ keyCode\ is\ a\ pakman\ control\ (and\ therefore\ was\ handled).\n
+numComments=8

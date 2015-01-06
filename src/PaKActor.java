@@ -36,7 +36,6 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
     }
     
     
-    
     /**
      * Called in the game loop. Updates pakman's location and cycles the sprite.
      */
@@ -64,12 +63,17 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
     
     /**
      * Remove pill from game grid and increase score number.
+     * If level completed - reset level
      * @param location of pill
      */
     private void eatPill(Location location){
     	game.getLevel().eat(location); //Remove pill
     	score++; //Get 1 score for one pill
     	changeScore(score);
+    	if (game.getLevel().completed()){
+    		game.levelDone();
+    		game.reset();
+    	}
     }
     
     

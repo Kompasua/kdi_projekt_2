@@ -53,6 +53,7 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
      */
     private void doMove(Location loc) {
         setLocation(loc);
+        
     }
     
     

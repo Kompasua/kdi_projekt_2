@@ -2,6 +2,7 @@
 // Used for PaKman
 
 import ch.aplu.jgamegrid.*;
+
 import java.awt.event.KeyEvent;
 import java.awt.*;
 
@@ -16,11 +17,13 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
     private int idSprite;
     private Location next;
     private PaKman game;
+    private int score;
     
 
     public PaKActor(PaKman game) {
         super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
         this.game = game;
+        this.score = 0; //Set score to 0 at the begin of game
         game.addKeyRepeatListener(this);
         
         reset();
@@ -40,7 +43,10 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
     public void act() {
         if (next != null  &&  !next.equals(getLocation()))
             doMove(next);
-        
+        //Check if location contains a pill
+        if (game.getLevel().getTile(getLocation()) == Tile.PILL){
+        	eatPill(getLocation());
+        }
         // Cycle sprite
         show(idSprite);
         if (++idSprite == nbSprites)
@@ -53,7 +59,26 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
      */
     private void doMove(Location loc) {
         setLocation(loc);
-        
+    }
+    
+    
+    /**
+     * Remove pill from game grid and increase score number.
+     * @param location of pill
+     */
+    private void eatPill(Location location){
+    	game.getLevel().eat(location); //Remove pill
+    	score++; //Get 1 score for one pill
+    	changeScore(score);
+    }
+    
+    
+    /**
+     * Change current score number.
+     * @param score to set in title
+     */
+    private void changeScore(int score){
+    	gameGrid.setTitle("| Score: "+score+" |");
     }
     
     

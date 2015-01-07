@@ -20,6 +20,22 @@ public class Ghost extends Actor
 
     
     /**
+     * @return if hunting mode is on or off.
+     */
+    public boolean getMode(){
+        return hunting;
+    }
+    
+    
+    /**
+     * @return if hunting mode is on or off.
+     */
+    public void setMode(boolean mode){
+        this.hunting = mode;
+    }
+    
+    
+    /**
      * Called when the level is initialized or reset.
      */
     public void reset() {
@@ -39,8 +55,7 @@ public class Ghost extends Actor
         
         if (randomSteps > 0) {
             randomSteps--;
-            //Uncomment next line for ghost movement
-            //moveRandom();
+            moveRandom();
         }
         
         // When moving westwards, mirror the sprite so it looks in the proper direction

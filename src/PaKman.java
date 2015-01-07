@@ -78,6 +78,7 @@ public class PaKman extends GameGrid implements GGKeyListener
     public int collide(Actor pac, Actor other) {
         pac.collide(pac, other);
         other.collide(other, pac);
+        other.setLocation(theLevel.getGhostStart());
         checkLives();
         return 0;
     }
@@ -88,16 +89,22 @@ public class PaKman extends GameGrid implements GGKeyListener
      * and reset pacActor if the last one.
      */
     private void checkLives(){
-        int lives = pacActor.getLives();
-        if (lives <=0){
-            updateTitle();
-            gameOver();
-            pacActor = new PaKActor(this); //Create new pacActor with default params.
+        if (pinky.getMode()){
+            int lives = pacActor.getLives();
+            if (lives <=0){
+                updateTitle();
+                gameOver();
+                pacActor = new PaKActor(this); //Create new pacActor with default params.
+            }else{
+                pacActor.setLives(lives-1);
+                pacActor.setCurScore(0);
+                updateTitle();
+                levelFail();
+            }
         }else{
-            pacActor.setLives(lives-1);
-            pacActor.setCurScore(0);
+            pacActor.setCurScore(pacActor.getCurScore() + 50);
+            pinky.setMode(true);
             updateTitle();
-            levelFail();
         }
     }
     

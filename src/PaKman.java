@@ -88,13 +88,14 @@ public class PaKman extends GameGrid implements GGKeyListener
      * and reset pacActor if the last one.
      */
     private void checkLives(){
-        if (pacActor.lives <=0){
+        int lives = pacActor.getLives();
+        if (lives <=0){
             updateTitle();
             gameOver();
             pacActor = new PaKActor(this); //Create new pacActor with default params.
         }else{
-            pacActor.lives--;
-            pacActor.curScore = 0;
+            pacActor.setLives(lives-1);
+            pacActor.setCurScore(0);
             updateTitle();
             levelFail();
         }
@@ -106,7 +107,7 @@ public class PaKman extends GameGrid implements GGKeyListener
      * with actual data.
      */
     public void updateTitle(){
-        displayScore(0, pacActor.curScore+pacActor.score, pacActor.lives);
+        displayScore(0, pacActor.getCurScore() + pacActor.getScore(), pacActor.getLives());
     }
 
     

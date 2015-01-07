@@ -17,21 +17,69 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
     private int idSprite;
     private Location next;
     private PaKman game;
-    public int curScore; //Points earned in this level
-    public int score; //Points earned in previous levels
-    public int lives; 
+    private int curScore; //Points earned in this level
+    private int score; //Points earned in previous levels
+    private int lives; //Lives of pakman 
     
 
     public PaKActor(PaKman game) {
         super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
         this.game = game;
         this.curScore = 0; //Set curScore to 0 at the begin of game
-        this.lives = 1;
+        this.lives = 1; //Set lives of pakman. In release should be 3
         game.addKeyRepeatListener(this);
         
         reset();
     }
 
+    
+    /**
+     * @return curScore - current score number
+     */
+    public int getCurScore() {
+        return curScore;
+    }
+
+
+    /**
+     * @param curScore - the current score to set
+     */
+    public void setCurScore(int curScore) {
+        this.curScore = curScore;
+    }
+
+
+    /**
+     * @return score earned in all successful levels
+     */
+    public int getScore() {
+        return score;
+    }
+
+
+    /**
+     * @param score - general score to set
+     */
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+
+    /**
+     * @return lives of pakman 
+     */
+    public int getLives() {
+        return lives;
+    }
+
+
+    /**
+     * @param lives - the lives to set
+     */
+    public void setLives(int lives) {
+        this.lives = lives;
+    }
+    
     
     public void reset() {
         idSprite = 0;
@@ -136,7 +184,5 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
         
         return true;
      }
-    
 }
-
 //EOF

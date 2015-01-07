@@ -200,17 +200,17 @@ public class Level
             "xx xxxx xx xxxx" + // 8
             "xx      xx    x" + // 9
             "xxxxxxx xxxxx x" + // 10
-            "xxxxxxx xxxxx x" + // 11
+            "xxxxxxx xxxxxxx" + // 11
             "xxxxxxx xx     " + // 12
             "xxxxxxx xx xxx " + // 13
             "xxxxxxx xx xxx " + // 14
-            "xx         xx  " + // 15
+            "xx       x xx  " + // 15
             "xxxxxxx xx xxxx" + // 16
             "xxxxxxx xx xxxx" + // 17
             "xxxxxxx xx     " + // 18
             "xxxxxxx xx xxxx" + // 19
             "xxxxxxx xx xxxx" + // 20
-            "              x" + // 21
+            "         x    x" + // 21
             "xx xxxx xxxxx x" + // 22
             "xx xxxx xxxxx x" + // 23
             "xx   xx        " + // 24

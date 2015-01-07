@@ -33,6 +33,7 @@ public class PaKman extends GameGrid implements GGKeyListener
         checkCollisions = true;
         removeAllActors();
         setupLevel(new Level(this));
+        pacActor.setCurScore(0);
         updateTitle(); //Update score and lives if was "game over"
     }
 
@@ -79,17 +80,22 @@ public class PaKman extends GameGrid implements GGKeyListener
         pac.collide(pac, other);
         other.collide(other, pac);
         other.setLocation(theLevel.getGhostStart());
-        checkLives();
+        Ghost ghost = (Ghost)other; //Used to get and set mode of ghost
+        checkLives(ghost.getMode()); //Decrease lives if hunting, +50 if fleeing
+        ghost.setMode(true); //Change mode of raised ghost
         return 0;
     }
     
     
     /**
-     * Decrease lives number. Check if level failed or game over
-     * and reset pacActor if the last one.
+     * Decrease lives number of add points. 
+     * First check mode. If fleeing - add 50 points, otherwise
+     * check if level failed or game over
+     * and reset pacActor score and lives if the last one.
      */
-    private void checkLives(){
-        if (pinky.getMode()){
+    private void checkLives(boolean mode){
+        //Check mode
+        if (mode){
             int lives = pacActor.getLives();
             if (lives <=0){
                 updateTitle();
@@ -103,7 +109,6 @@ public class PaKman extends GameGrid implements GGKeyListener
             }
         }else{
             pacActor.setCurScore(pacActor.getCurScore() + 50);
-            pinky.setMode(true);
             updateTitle();
         }
     }

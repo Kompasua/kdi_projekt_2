@@ -17,14 +17,15 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
     private int idSprite;
     private Location next;
     private PaKman game;
-    public int score;
-    public int lives;
+    public int curScore; //Points earned in this level
+    public int score; //Points earned in previous levels
+    public int lives; 
     
 
     public PaKActor(PaKman game) {
         super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
         this.game = game;
-        this.score = 0; //Set score to 0 at the begin of game
+        this.curScore = 0; //Set curScore to 0 at the begin of game
         this.lives = 1;
         game.addKeyRepeatListener(this);
         
@@ -46,7 +47,7 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
             doMove(next);
         //Check if location contains a pill
         if (game.getLevel().getTile(getLocation()) == Tile.PILL){
-        	eatPill(getLocation());
+            eatPill(getLocation());
         }
         // Cycle sprite
         show(idSprite);
@@ -64,18 +65,19 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
     
     
     /**
-     * Remove pill from game grid and increase score number.
+     * Remove pill from game grid and increase curScore number.
      * If level completed - reset level
      * @param location of pill
      */
     private void eatPill(Location location){
-    	game.getLevel().eat(location); //Remove pill
-    	score++; //Get 1 score for one pill
-    	game.updateTitle();
-    	if (game.getLevel().completed()){
-    		game.levelDone();
-    		game.reset();
-    	}
+        game.getLevel().eat(location); //Remove pill
+        curScore++; //Get 1 curScore for one pill
+        game.updateTitle();
+        if (game.getLevel().completed()){
+            score += curScore; //Save score from this level
+            curScore = 0; //Reset current score
+            game.levelDone();
+        }
     }
     
     

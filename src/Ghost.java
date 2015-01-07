@@ -39,7 +39,8 @@ public class Ghost extends Actor
         
         if (randomSteps > 0) {
             randomSteps--;
-            moveRandom();
+            //Uncomment next line for ghost movement
+            //moveRandom();
         }
         
         // When moving westwards, mirror the sprite so it looks in the proper direction

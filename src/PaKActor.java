@@ -17,13 +17,15 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
     private int idSprite;
     private Location next;
     private PaKman game;
-    private int score;
+    public int score;
+    public int lives;
     
 
     public PaKActor(PaKman game) {
         super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
         this.game = game;
         this.score = 0; //Set score to 0 at the begin of game
+        this.lives = 1;
         game.addKeyRepeatListener(this);
         
         reset();
@@ -69,20 +71,11 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
     private void eatPill(Location location){
     	game.getLevel().eat(location); //Remove pill
     	score++; //Get 1 score for one pill
-    	changeScore(score);
+    	game.updateTitle();
     	if (game.getLevel().completed()){
     		game.levelDone();
     		game.reset();
     	}
-    }
-    
-    
-    /**
-     * Change current score number.
-     * @param score to set in title
-     */
-    private void changeScore(int score){
-    	gameGrid.setTitle("| Score: "+score+" |");
     }
     
     

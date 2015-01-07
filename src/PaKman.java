@@ -20,9 +20,9 @@ public class PaKman extends GameGrid implements GGKeyListener
         setTitle("PaKman");
         addKeyListener(this);
         addActListener(new CheckerReset());
-
+        
         setupLevel(new Level(this));
-
+        
         // Show and activate the game window
         show();
         activate();
@@ -33,6 +33,7 @@ public class PaKman extends GameGrid implements GGKeyListener
         checkCollisions = true;
         removeAllActors();
         setupLevel(new Level(this));
+        updateTitle(); //Update score and lives if was "game over"
     }
 
     
@@ -77,8 +78,34 @@ public class PaKman extends GameGrid implements GGKeyListener
     public int collide(Actor pac, Actor other) {
         pac.collide(pac, other);
         other.collide(other, pac);
-        gameOver();
+        checkLives();
         return 0;
+    }
+    
+    
+    /**
+     * Decrease lives number. Check if level failed or game over
+     * and reset pacActor if the last one.
+     */
+    private void checkLives(){
+    	if (pacActor.lives <=0){
+        	updateTitle();
+        	gameOver();
+        	pacActor = new PaKActor(this); //Create new pacActor with default params.
+        }else{
+        	pacActor.lives--;
+        	updateTitle();
+        	levelFail();
+        }
+    }
+    
+    
+    /**
+     * Update game window title, which contains score and number of lives, 
+     * with actual data.
+     */
+    public void updateTitle(){
+    	displayScore(0, pacActor.score, pacActor.lives);
     }
 
     

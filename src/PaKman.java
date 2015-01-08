@@ -2,6 +2,7 @@
 // Simple PaKman implementation
 
 import ch.aplu.jgamegrid.*;
+
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -11,21 +12,39 @@ public class PaKman extends GameGrid implements GGKeyListener
     protected PaKActor pacActor;
     private Ghost pinky;
     private Level theLevel;
-    private boolean checkCollisions;    // For the collision mechanism below
+    private boolean checkCollisions; // For the collision mechanism below
+    private Score score; //Collect score and lives of pacman
+
 
     public PaKman() {
-        super(30, 33, 20, true);    // Need to set the winsize, because it cannot be changed.
+        super(30, 33, 20, true); // Need to set the winsize, because it cannot be changed.
         pacActor = new PaKActor(this);
         setSimulationPeriod(100);
         setTitle("PaKman");
         addKeyListener(this);
         addActListener(new CheckerReset());
-        
+        score = new Score(this, 3); //Create score storage 
         setupLevel(new Level(this));
         
         // Show and activate the game window
         show();
         activate();
+    }
+    
+    
+    /**
+     * @return the score
+     */
+    public Score getScore() {
+        return score;
+    }
+
+
+    /**
+     * @param score the score to set
+     */
+    public void setScore(Score score) {
+        this.score = score;
     }
 
     
@@ -33,8 +52,7 @@ public class PaKman extends GameGrid implements GGKeyListener
         checkCollisions = true;
         removeAllActors();
         setupLevel(new Level(this));
-        pacActor.setCurScore(0);
-        updateTitle(); //Update score and lives if was "game over"
+        score.setCurScore(0);
     }
 
     
@@ -96,32 +114,20 @@ public class PaKman extends GameGrid implements GGKeyListener
     private void checkLives(boolean mode){
         //Check mode
         if (mode){
-            int lives = pacActor.getLives();
-            if (lives <=0){
-                updateTitle();
+            //int lives = score.getCurLives();
+            if (!score.decrementLives()){
                 gameOver();
-                pacActor = new PaKActor(this); //Create new pacActor with default params.
+                score.reset();
             }else{
-                pacActor.setLives(lives-1);
-                pacActor.setCurScore(0);
-                updateTitle();
+                //score.decrementLives();
+                score.setCurScore(0);
                 levelFail();
             }
         }else{
-            pacActor.setCurScore(pacActor.getCurScore() + 50);
-            updateTitle();
+            score.addCurScore(50);
         }
     }
     
-    
-    /**
-     * Update game window title, which contains score and number of lives, 
-     * with actual data.
-     */
-    public void updateTitle(){
-        displayScore(0, pacActor.getCurScore() + pacActor.getScore(), pacActor.getLives());
-    }
-
     
     /**
      * Return some ghost of type Randy. For testing purposes only

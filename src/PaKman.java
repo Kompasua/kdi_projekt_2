@@ -10,6 +10,7 @@ public class PaKman extends GameGrid implements GGKeyListener
 {
     protected PaKActor pacActor;
     private Ghost pinky;
+    private Ghost winky;
     private Level theLevel;
     private boolean checkCollisions;    // For the collision mechanism below
 
@@ -33,6 +34,7 @@ public class PaKman extends GameGrid implements GGKeyListener
         checkCollisions = true;
         removeAllActors();
         setupLevel(new Level(this));
+        //Reset current score if was pressed during the game
         pacActor.setCurScore(0);
         updateTitle(); //Update score and lives if was "game over"
     }
@@ -43,6 +45,7 @@ public class PaKman extends GameGrid implements GGKeyListener
      */
     public void toggleHunting() {
         pinky.toggleHunting();
+        winky.toggleHunting();
     }
     
     
@@ -64,8 +67,13 @@ public class PaKman extends GameGrid implements GGKeyListener
         addActor(pacActor, level.getPakmanStart());
         addActor(new PreMovementChecker(), level.getSize());
         
-        pinky = new Ghost(this);
+        pinky = new Silly(this);
+        pinky.setSlowDown(2);
         addActor(pinky, level.getGhostStart());
+        
+        winky = new Randy(this);
+        winky.setSlowDown(2);
+        addActor(winky, level.getGhostStart());
         
         // pakman acts after ghosts and between movement checkers, to ensure correct collision detection
         setActOrder(Ghost.class, PreMovementChecker.class, PaKActor.class, PostMovementChecker.class);
@@ -82,7 +90,7 @@ public class PaKman extends GameGrid implements GGKeyListener
         other.setLocation(theLevel.getGhostStart());
         Ghost ghost = (Ghost)other; //Used to get and set mode of ghost
         checkLives(ghost.getMode()); //Decrease lives if hunting, +50 if fleeing
-        ghost.setMode(true); //Change mode of raised ghost
+        //ghost.setMode(true); //Change mode of raised ghost
         return 0;
     }
     
@@ -100,6 +108,7 @@ public class PaKman extends GameGrid implements GGKeyListener
             if (lives <=0){
                 updateTitle();
                 gameOver();
+                removeAllActors();
                 pacActor = new PaKActor(this); //Create new pacActor with default params.
             }else{
                 pacActor.setLives(lives-1);

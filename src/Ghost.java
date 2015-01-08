@@ -5,17 +5,17 @@ import ch.aplu.jgamegrid.*;
 import java.awt.Color;
 import java.util.*;
 
-public class Ghost extends Actor
+public abstract class Ghost extends Actor
 {
     private PaKman game;
     private int randomSteps;    // How many next moves are random
-    private boolean hunting;    // Hunting (T) or fleeing (F)
+    protected boolean hunting;    // Hunting (T) or fleeing (F)
 
-    public Ghost(PaKman game)
+    public Ghost(PaKman game, int type)
     {
-        super(false, "sprites/silly.gif", 2);
+        super(false, "sprites/ghost_" + type + ".gif", 1);
         this.game = game;
-        reset();
+        reset(); 
     }
 
     
@@ -82,7 +82,7 @@ public class Ghost extends Actor
      * Try to move one step towards pakman.
      * @return true iff moved.
      */
-    private boolean moveHunt() {
+    protected boolean moveHunt() {
         Location pac = game.wherePakman();
         Location me = getLocation();
         int dx = pac.x - me.x;
@@ -111,7 +111,7 @@ public class Ghost extends Actor
      * Try to move one step away from pakman.
      * @return true iff moved.
      */
-    private boolean moveFlee() {
+    protected boolean moveFlee() {
         Location pac = game.wherePakman();
         Location me = getLocation();
         int dx = pac.x - me.x;
@@ -140,7 +140,7 @@ public class Ghost extends Actor
      * Move one step randomly.
      * @return true always.
      */
-    private boolean moveRandom() {
+    protected boolean moveRandom() {
         final int right = 90, left = -90;
         boolean turnLeft = canMove(getDirection() + left);
         boolean turnRight = canMove(getDirection() + right);

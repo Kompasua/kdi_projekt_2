@@ -11,6 +11,7 @@ public class PaKman extends GameGrid implements GGKeyListener
 {
     protected PaKActor pacActor;
     private Ghost pinky;
+    private Ghost winky;
     private Level theLevel;
     private boolean checkCollisions; // For the collision mechanism below
     private Score score; //Collect score and lives of pacman
@@ -61,6 +62,7 @@ public class PaKman extends GameGrid implements GGKeyListener
      */
     public void toggleHunting() {
         pinky.toggleHunting();
+        winky.toggleHunting();
     }
     
     
@@ -82,8 +84,13 @@ public class PaKman extends GameGrid implements GGKeyListener
         addActor(pacActor, level.getPakmanStart());
         addActor(new PreMovementChecker(), level.getSize());
         
-        pinky = new Ghost(this);
+        pinky = new Silly(this);
+        pinky.setSlowDown(2);
         addActor(pinky, level.getGhostStart());
+        
+        winky = new Randy(this);
+        winky.setSlowDown(2);
+        addActor(winky, level.getGhostStart());
         
         // pakman acts after ghosts and between movement checkers, to ensure correct collision detection
         setActOrder(Ghost.class, PreMovementChecker.class, PaKActor.class, PostMovementChecker.class);
@@ -100,7 +107,7 @@ public class PaKman extends GameGrid implements GGKeyListener
         other.setLocation(theLevel.getGhostStart());
         Ghost ghost = (Ghost)other; //Used to get and set mode of ghost
         checkLives(ghost.getMode()); //Decrease lives if hunting, +50 if fleeing
-        ghost.setMode(true); //Change mode of raised ghost
+        //ghost.setMode(true); //Change mode of raised ghost
         return 0;
     }
     
@@ -118,6 +125,7 @@ public class PaKman extends GameGrid implements GGKeyListener
             if (!score.decrementLives()){
                 gameOver();
                 score.reset();
+                removeAllActors(); //Probably should be deleted
             }else{
                 //score.decrementLives();
                 score.setCurScore(0);

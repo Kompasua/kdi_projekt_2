@@ -52,6 +52,7 @@ public class PaKman extends GameGrid implements GGKeyListener
     public void reset() {
         checkCollisions = true;
         removeAllActors();
+        Ghost.list.clear();
         setupLevel(new Level(this));
         score.setCurScore(0);
     }

@@ -58,11 +58,12 @@ public class PaKman extends GameGrid implements GGKeyListener
 
     
     /**
-     * Toggle hunting/fleeing mode.
+     * Toggle hunting/fleeing mode of all ghosts.
      */
     public void toggleHunting() {
-        pinky.toggleHunting();
-        winky.toggleHunting();
+        for (Ghost ghost : Ghost.list){
+            ghost.toggleHunting();
+        }
     }
     
     
@@ -83,14 +84,13 @@ public class PaKman extends GameGrid implements GGKeyListener
         addActor(new PostMovementChecker(), level.getSize());
         addActor(pacActor, level.getPakmanStart());
         addActor(new PreMovementChecker(), level.getSize());
-        
+        //Create new ghosts
         pinky = new Silly(this);
-        pinky.setSlowDown(2);
-        addActor(pinky, level.getGhostStart());
-        
         winky = new Randy(this);
-        winky.setSlowDown(2);
-        addActor(winky, level.getGhostStart());
+        //Add all created ghosts on game grid.
+        for (Ghost ghost : Ghost.list){
+            addActor(ghost, level.getGhostStart());
+        }
         
         // pakman acts after ghosts and between movement checkers, to ensure correct collision detection
         setActOrder(Ghost.class, PreMovementChecker.class, PaKActor.class, PostMovementChecker.class);
@@ -105,9 +105,21 @@ public class PaKman extends GameGrid implements GGKeyListener
         pac.collide(pac, other);
         other.collide(other, pac);
         other.setLocation(theLevel.getGhostStart());
+        
+        /*
+         * String below should be used if colliding not just with ghost is possible.
+         * In this case add if statement and appropriate logic. Customization to Ghost
+         * if colliding with f.e. cherry is possible will raise error. 
+         * Also class of child of ghost children is not "Ghost". In this case children
+         * of Ghost must be final to prevent error.
+         * 
+         * other.getClass().getSuperclass().getName() == Ghost.class.getName();
+         */
+        
         Ghost ghost = (Ghost)other; //Used to get and set mode of ghost
         checkLives(ghost.getMode()); //Decrease lives if hunting, +50 if fleeing
-        //ghost.setMode(true); //Change mode of raised ghost
+        other.removeSelf(); //Remove ghost
+        addActor(other, theLevel.getGhostStart()); //Raise ghost
         return 0;
     }
     
@@ -121,18 +133,16 @@ public class PaKman extends GameGrid implements GGKeyListener
     private void checkLives(boolean mode){
         //Check mode
         if (mode){
-            //int lives = score.getCurLives();
             if (!score.decrementLives()){
                 gameOver();
-                score.reset();
+                score.reset(); //Reset lives and score
                 removeAllActors(); //Probably should be deleted
             }else{
-                //score.decrementLives();
-                score.setCurScore(0);
+                score.setCurScore(0); //Reset score earned this level
                 levelFail();
             }
         }else{
-            score.addCurScore(50);
+            score.addCurScore(50); //If ghost was eaten
         }
     }
     

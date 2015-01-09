@@ -7,14 +7,18 @@ import java.util.*;
 
 public abstract class Ghost extends Actor
 {
+    //Store all ghosts
+    public static ArrayList<Ghost> list = new ArrayList<Ghost>();
     private PaKman game;
     private int randomSteps;    // How many next moves are random
     protected boolean hunting;    // Hunting (T) or fleeing (F)
 
-    public Ghost(PaKman game, int type)
+    public Ghost(PaKman game, String filename)
     {
-        super(false, "sprites/ghost_" + type + ".gif", 1);
+        super(false, filename, 2);
         this.game = game;
+        this.setSlowDown(2);
+        list.add(this); //Add every new ghost in global Array.
         reset(); 
     }
 
@@ -25,15 +29,7 @@ public abstract class Ghost extends Actor
     public boolean getMode(){
         return hunting;
     }
-    
-    
-    /**
-     * @return if hunting mode is on or off.
-     */
-    public void setMode(boolean mode){
-        this.hunting = mode;
-    }
-    
+       
     
     /**
      * Called when the level is initialized or reset.

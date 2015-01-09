@@ -10,7 +10,7 @@ public class Tracy extends Ghost
     private PaKman game;
 
     public Tracy(PaKman game) {
-        super(game, 1);
+        super(game, "sprites/tracy.gif");
         this.game = game;
         reset();
     }

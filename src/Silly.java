@@ -10,7 +10,7 @@ public class Silly extends Ghost
     private PaKman game;
 
     public Silly(PaKman game) {
-        super(game, 0);
+        super(game, "sprites/silly.gif");
         this.game = game;
         reset();
     }

@@ -17,12 +17,10 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
     private int idSprite;
     private Location next;
     private PaKman game;
-    //private Score score;
 
     public PaKActor(PaKman game) {
         super(true, "sprites/pacpix.gif", nbSprites);  // Rotatable
         this.game = game;
-        //score = new Score(game, 3);
         game.addKeyRepeatListener(this);
         
         reset();
@@ -65,6 +63,7 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
      * If level completed - reset level
      * @param location of pill
      */
+    //Probably should be moved in PaKman.java
     private void eatPill(Location location){
         game.getLevel().eat(location); //Remove pill
         game.getScore().addCurScore(1);

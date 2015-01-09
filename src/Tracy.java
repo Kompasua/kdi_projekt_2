@@ -1,18 +1,36 @@
-// Ghost.java
-// Used for PaKman
+import ch.aplu.jgamegrid.Actor;
+import ch.aplu.jgamegrid.Location;
 
-import ch.aplu.jgamegrid.*;
-import java.awt.Color;
-import java.util.*;
+/**Ghosts of type Tracy move as described in Project 1, with the following
+ * modifications:
+ * i. When a move/flee is not possible, only a single random step is made.
+ * ii. When the ghost is at less than 5 cells distance in both horizontal
+ * and vertical direction from its starting position, it will only move randomly.
+ * Tracy is green when hunting and grey when fleeing.
+ */
 
 public class Tracy extends Ghost
 {
     private PaKman game;
-
+    
     public Tracy(PaKman game) {
         super(game, "sprites/tracy.gif");
         this.game = game;
         reset();
     }
-    // TODO add functionality according the task
+    
+    @Override
+    public void act() {
+        Location start = getLocationStart();
+        if (Math.abs(start.getX() - getLocation().x) <= 5 && Math.abs(start.getY() - getLocation().y) <= 5){
+            moveRandom();
+        }else{
+            act(1);
+        }
+        // When moving westwards, mirror the sprite so it looks in the proper direction
+        if (getDirection() > 150 && getDirection() < 210)
+            setHorzMirror(false);
+        else
+            setHorzMirror(true);
+    }
 }

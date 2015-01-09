@@ -60,6 +60,24 @@ public abstract class Ghost extends Actor
         else
             setHorzMirror(true);
     }
+    
+    
+    public void act(int steps)
+    {
+        if ( randomSteps <= 0  &&  !(hunting ? moveHunt() : moveFlee()) )
+            randomSteps = steps;
+        
+        if (randomSteps > 0) {
+            randomSteps--;
+            moveRandom();
+        }
+        
+        // When moving westwards, mirror the sprite so it looks in the proper direction
+        if (getDirection() > 150 && getDirection() < 210)
+            setHorzMirror(false);
+        else
+            setHorzMirror(true);
+    }
 
     
     /**

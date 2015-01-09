@@ -1,18 +1,23 @@
-// Ghost.java
-// Used for PaKman
+/**
+ * Ghosts of type Randy move only randomly in the fashion as described
+ * in Project 1. Randy is red when hunting and grey when fleeing.
+ */
 
-import ch.aplu.jgamegrid.*;
-import java.awt.Color;
-import java.util.*;
-
-public class Randy extends Ghost
-{
-    private PaKman game;
+public class Randy extends Ghost {
 
     public Randy(PaKman game) {
         super(game, "sprites/randy.gif");
-        this.game = game;
         reset();
     }
-    // TODO add functionality according the task
+
+    @Override
+    public void act() {
+        moveRandom();
+        // When moving westwards, mirror the sprite so it looks in the proper direction
+        if (getDirection() > 150 && getDirection() < 210)
+            setHorzMirror(false);
+        else
+            setHorzMirror(true);
+    }
 }
+//EOF

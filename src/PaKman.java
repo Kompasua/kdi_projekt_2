@@ -10,8 +10,12 @@ import java.util.*;
 public class PaKman extends GameGrid implements GGKeyListener
 {
     protected PaKActor pacActor;
-    private Ghost pinky;
-    private Ghost winky;
+    
+    private Ghost silly1;
+    private Ghost silly2;
+    private Ghost randy;
+    private Ghost tracy;
+    
     private Level theLevel;
     private boolean checkCollisions; // For the collision mechanism below
     private Score score; //Collect score and lives of pacman
@@ -86,8 +90,10 @@ public class PaKman extends GameGrid implements GGKeyListener
         addActor(pacActor, level.getPakmanStart());
         addActor(new PreMovementChecker(), level.getSize());
         //Create new ghosts
-        pinky = new Silly(this);
-        winky = new Randy(this);
+        silly1 = new Silly(this);
+        silly2 = new Silly(this);
+        randy = new Randy(this);
+        tracy = new Tracy(this);
         //Add all created ghosts on game grid.
         for (Ghost ghost : Ghost.list){
             addActor(ghost, level.getGhostStart());

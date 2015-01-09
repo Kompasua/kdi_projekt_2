@@ -1,18 +1,12 @@
-// Ghost.java
-// Used for PaKman
+/**
+ * Ghosts of type Silly move as described in Project 1. Silly is blue when
+ * hunting and grey when fleeing.
+ */
 
-import ch.aplu.jgamegrid.*;
-import java.awt.Color;
-import java.util.*;
-
-public class Silly extends Ghost
-{
-    private PaKman game;
-
+public class Silly extends Ghost {
+    
     public Silly(PaKman game) {
         super(game, "sprites/silly.gif");
-        this.game = game;
         reset();
     }
-    // TODO add functionality according the task
 }

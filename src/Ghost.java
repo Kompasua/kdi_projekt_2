@@ -2,7 +2,6 @@
 // Used for PaKman
 
 import ch.aplu.jgamegrid.*;
-import java.awt.Color;
 import java.util.*;
 
 public abstract class Ghost extends Actor

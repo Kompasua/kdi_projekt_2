@@ -2,9 +2,7 @@
 // Used for PaKman
 
 import ch.aplu.jgamegrid.*;
-
 import java.awt.event.KeyEvent;
-import java.awt.*;
 
 /**
  * The PaKman Actor. It is a keyboard listener and can be directed using
@@ -66,9 +64,9 @@ public class PaKActor extends Actor implements GGKeyRepeatListener
     //Probably should be moved in PaKman.java
     private void eatPill(Location location){
         game.getLevel().eat(location); //Remove pill
-        game.getScore().addCurScore(1);
-        if (game.getLevel().completed()){
-            game.getScore().saveCurScore();
+        game.getScore().addCurScore(1); //Add 1 score for eaten pill
+        if (game.getLevel().completed()){ //Check if level done
+            game.getScore().saveCurScore(); //Save scores earned in this level
             game.levelDone();
         }
     }

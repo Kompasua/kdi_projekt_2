@@ -2,15 +2,13 @@
 // Simple PaKman implementation
 
 import ch.aplu.jgamegrid.*;
-
 import java.awt.*;
 import java.awt.event.*;
-import java.util.*;
 
 public class PaKman extends GameGrid implements GGKeyListener
 {
     protected PaKActor pacActor;
-    
+    //Add ghosts
     private Ghost silly1;
     private Ghost silly2;
     private Ghost randy;
@@ -55,10 +53,10 @@ public class PaKman extends GameGrid implements GGKeyListener
     
     public void reset() {
         checkCollisions = true;
-        removeAllActors();
-        Ghost.list.clear();
+        removeAllActors(); //Remove actors from grid
+        Ghost.list.clear(); //Remove all created ghosts from array
         setupLevel(new Level(this));
-        score.setCurScore(0);
+        score.setCurScore(0); //Reset score earned in this level
     }
 
     
@@ -86,14 +84,17 @@ public class PaKman extends GameGrid implements GGKeyListener
         setNbHorzCells(level.getSize().x);
         setNbVertCells(level.getSize().y);
         level.drawLevel();
+        
         addActor(new PostMovementChecker(), level.getSize());
         addActor(pacActor, level.getPakmanStart());
         addActor(new PreMovementChecker(), level.getSize());
+        
         //Create new ghosts
         silly1 = new Silly(this);
         silly2 = new Silly(this);
         randy = new Randy(this);
         tracy = new Tracy(this);
+        
         //Add all created ghosts on game grid.
         for (Ghost ghost : Ghost.list){
             addActor(ghost, level.getGhostStart());
@@ -111,12 +112,13 @@ public class PaKman extends GameGrid implements GGKeyListener
     public int collide(Actor pac, Actor other) {
         pac.collide(pac, other);
         other.collide(other, pac);
+        //return collided ghost on his start position
         other.setLocation(theLevel.getGhostStart());
         
         /*
          * String below should be used if colliding not just with ghost is possible.
-         * In this case add if statement and appropriate logic. Customization to Ghost
-         * if colliding with f.e. cherry is possible will raise error. 
+         * In this case add if statement and appropriate logic. Customization to Ghost,
+         * if colliding with f.e. cherry is possible, will raise error. 
          * Also class of child of ghost children is not "Ghost". In this case children
          * of Ghost must be final to prevent error.
          * 
@@ -126,7 +128,7 @@ public class PaKman extends GameGrid implements GGKeyListener
         Ghost ghost = (Ghost)other; //Used to get and set mode of ghost
         checkLives(ghost.getMode()); //Decrease lives if hunting, +50 if fleeing
         other.removeSelf(); //Remove ghost
-        addActor(other, theLevel.getGhostStart()); //Raise ghost
+        addActor(other, theLevel.getGhostStart()); //Raise ghost on start position
         return 0;
     }
     
@@ -134,8 +136,8 @@ public class PaKman extends GameGrid implements GGKeyListener
     /**
      * Decrease lives number of add points. 
      * First check mode. If fleeing - add 50 points, otherwise
-     * check if level failed or game over
-     * and reset pacActor score and lives if the last one.
+     * check if "level failed" or "game over"
+     * and reset pacActor score and lives if "game over".
      */
     private void checkLives(boolean mode){
         //Check mode
@@ -158,7 +160,7 @@ public class PaKman extends GameGrid implements GGKeyListener
      * Return some ghost of type Randy. For testing purposes only
      */
     public Actor getRandy() {
-        return null;
+        return randy;
     }
 
     
@@ -166,7 +168,7 @@ public class PaKman extends GameGrid implements GGKeyListener
      * Return some ghost of type Silly.
      */
     public Actor getSilly() {
-        return null;
+        return silly1;
     }
 
     
@@ -174,7 +176,7 @@ public class PaKman extends GameGrid implements GGKeyListener
      * Return some ghost of type Tracy.
      */
     public Actor getTracy() {
-        return null;
+        return tracy;
     }
     
     //==================================================================================================

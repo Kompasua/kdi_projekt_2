@@ -1,7 +1,5 @@
-import ch.aplu.jgamegrid.Actor;
-import ch.aplu.jgamegrid.Location;
-
-/**Ghosts of type Tracy move as described in Project 1, with the following
+/**
+ * Ghosts of type Tracy move as described in Project 1, with the following
  * modifications:
  * i. When a move/flee is not possible, only a single random step is made.
  * ii. When the ghost is at less than 5 cells distance in both horizontal
@@ -9,13 +7,12 @@ import ch.aplu.jgamegrid.Location;
  * Tracy is green when hunting and grey when fleeing.
  */
 
-public class Tracy extends Ghost
-{
-    private PaKman game;
+import ch.aplu.jgamegrid.Location;
+
+public class Tracy extends Ghost {
     
     public Tracy(PaKman game) {
         super(game, "sprites/tracy.gif");
-        this.game = game;
         reset();
     }
     
@@ -34,3 +31,4 @@ public class Tracy extends Ghost
             setHorzMirror(true);
     }
 }
+//EOF

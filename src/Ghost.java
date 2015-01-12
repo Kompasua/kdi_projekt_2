@@ -198,7 +198,11 @@ public abstract class Ghost extends Actor
      */
     private boolean canMove(Location location)
     {
-        return gameGrid.isInGrid(location) &&
-                game.getLevel().getTile(location) == Tile.PASSAGE;
+        if (gameGrid.isInGrid(location) &&
+                (game.getLevel().getTile(location) == Tile.PASSAGE ||
+                game.getLevel().getTile(location) == Tile.PILL))
+            return true;
+        else
+            return false;
     }
 }

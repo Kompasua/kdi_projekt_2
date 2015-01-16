@@ -88,19 +88,9 @@ public class Score {
      * @return false if dead, else true
      */
     public boolean decrementLives(){
-        if (curLives == 0){
-            return false;
-        }else{
-            curLives -= 1;
-            updateTitle();
-            return true;
-        }
-        /*Below is shorter solution, but displaying of -1 live 
-         *after game over must be fixed.
-         */
-        /*curLives -= 1;
+        curLives -= 1;
         updateTitle();
-        return curLives == 0 ? false : true;*/
+        return curLives == 0 ? false : true;
     }
     
     

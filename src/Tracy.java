@@ -19,7 +19,7 @@ public class Tracy extends Ghost {
     @Override
     public void act() {
         Location start = getLocationStart();
-        if (Math.abs(start.getX() - getLocation().x) <= 5 && Math.abs(start.getY() - getLocation().y) <= 5){
+        if (Math.abs(start.getX() - getLocation().x) < 5 && Math.abs(start.getY() - getLocation().y) < 5){
             moveRandom();
         }else{
             act(1);

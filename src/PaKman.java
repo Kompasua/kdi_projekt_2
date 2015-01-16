@@ -123,12 +123,13 @@ public class PaKman extends GameGrid implements GGKeyListener
          * of Ghost must be final to prevent error.
          * 
          * other.getClass().getSuperclass().getName() == Ghost.class.getName();
+         * 
+         * Other idea is to use instanceOf.
          */
         
         Ghost ghost = (Ghost)other; //Used to get and set mode of ghost
         checkLives(ghost.getMode()); //Decrease lives if hunting, +50 if fleeing
-        other.removeSelf(); //Remove ghost
-        addActor(other, theLevel.getGhostStart()); //Raise ghost on start position
+        other.setLocation( theLevel.getGhostStart()); //Set ghost on start position
         return 0;
     }
     
@@ -145,7 +146,6 @@ public class PaKman extends GameGrid implements GGKeyListener
             if (!score.decrementLives()){
                 gameOver();
                 score.reset(); //Reset lives and score
-                removeAllActors(); //Probably should be deleted
             }else{
                 score.setCurScore(0); //Reset score earned this level
                 levelFail();

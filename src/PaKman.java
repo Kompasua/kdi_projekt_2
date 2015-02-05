@@ -80,6 +80,8 @@ public class PaKman extends GameGrid implements GGKeyListener {
      * </ul>
      */
     public void setupLevel(Level level) {
+        Ghost.list.clear(); // Remove all created ghosts from array
+        
         theLevel = level;
         setNbHorzCells(level.getSize().x);
         setNbVertCells(level.getSize().y);
@@ -102,7 +104,7 @@ public class PaKman extends GameGrid implements GGKeyListener {
 
         /* 
          * pakman acts after ghosts and between movement checkers, to ensure
-         * correct collision detection
+         * correct collision detection.
          */
         setActOrder(Ghost.class, PreMovementChecker.class, PaKActor.class,
                 PostMovementChecker.class);

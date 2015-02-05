@@ -58,8 +58,7 @@ public class PaKActor extends Actor implements GGKeyRepeatListener {
      * Remove pill from game grid and increase curScore number. If level
      * completed - reset level
      * 
-     * @param location
-     *            of pill
+     * @param location of pill
      */
     // Probably should be moved in PaKman.java
     private void eatPill(Location location) {
